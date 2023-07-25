@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">    
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="input-field" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="input-field" required>
+
+            <input type="submit" value="Login" class="login-button">
+        </form>
+        <p class="create-user-link">Primeiro Acesso? <a href="{{ url_for('pagina_inicial') }}" class="create-user">Clique Aqui</a></p>
+    </div>
+</body>
+</html>
