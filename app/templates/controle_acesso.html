@@ -11,18 +11,16 @@
             <thead>
                 <tr>
                     <th>Usuario</th>
-                    <th>Tempo</th>
+                    <th>Tempo(Minutos)</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Replace the example data with the actual data from your MongoDB collection -->
                 <tr>
-                    <td>JohnDoe</td>
-                    <td>10 minutes</td>
-                </tr>
-                <tr>
-                    <td>JaneSmith</td>
-                    <td>5 minutes</td>
+                    {% for item in data %}
+                    <td>{{ item.nome }}</td> 
+                    <td>{{ item.tempo_de_uso }}</td>
+                    {% endfor %}
                 </tr>
                 <!-- Add more table rows for each record in your data -->
             </tbody>
