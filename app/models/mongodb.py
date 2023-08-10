@@ -30,5 +30,4 @@ class Mongodatabase(object):
     def get_registro_de_uso(self, data):
         collection = self.server()[data]
         dados = collection.find()
-        for dado in dados:
-            return dado
+        return dados
