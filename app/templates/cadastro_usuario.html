@@ -7,7 +7,12 @@
 <body>
     <div class="container">
         <h1>Cadastro</h1>
-        <form>
+        {% if message %}
+        <script>
+            window.alert("{{ message }}");
+        </script>
+        {% endif %}
+        <form method="POST" action="/cadastro_usuario">
             <label for="username">Usuário (e-mail):</label>
             <input type="text" id="username" name="username" class="input-field" required>
 

@@ -6,6 +6,11 @@ class Mongodatabase(object):
         db = client['gestao_de_acesso']
         return db
     
+    def user_data(self):
+        db = self.server()
+        collection = db['users']
+        return collection
+    
     def insert_dados(self, data, usuario, tempo):
         collection = self.server()[data]
         dados = [

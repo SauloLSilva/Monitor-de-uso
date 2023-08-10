@@ -7,7 +7,12 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form>
+        {% if message %}
+        <script>
+            window.alert("{{ message }}");
+        </script>
+        {% endif %}
+        <form method="POST" action="/">
             <label for="username">Usuário (e-mail):</label>
             <input type="text" id="username" name="username" class="input-field" required>
 
@@ -16,7 +21,7 @@
 
             <input type="submit" value="Login" class="login-button">
         </form>
-        <p class="create-user-link">Primeiro Acesso? <a href="{{ url_for('dashboards') }}" class="create-user">Clique Aqui</a></p>
+        <p class="create-user-link">Primeiro Acesso? <a href="{{ url_for('cadastro_usuario') }}" class="create-user">Clique Aqui</a></p>
     </div>
 </body>
 </html>
