@@ -1,4 +1,5 @@
 import cv2
+from app.models.simple_facerec import SimpleFacerec
 import time
 import os
 from datetime import datetime
@@ -12,52 +13,48 @@ try:
 except:
     pass
 
-def check_face_existente():
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+sfr = SimpleFacerec()
+sfr.load_encoding_images()
 
-    cap = cv2.VideoCapture(0)
+def check_face_existente():
+
+
+    cap = cv2.VideoCapture(-1)
 
     while True:
-        # Capturar um frame da webcam
         ret, frame = cap.read()
-        
-        # Converter o frame para escala de cinza para a detecção do rosto
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
-        # Detectar faces no frame
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
-        
-        for (x, y, w, h) in faces:
-            # Borrar o rosto detectado
-            blurred_face = cv2.GaussianBlur(frame[y:y+h, x:x+w], (99, 99), 30)
-            frame[y:y+h, x:x+w] = blurred_face
-        
-        # Verificar se pelo menos uma face foi detectada
-        if len(faces) > 0:
-            return True
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        face_locations, face_names = sfr.detect_known_faces(frame)
+        for face_loc, name in zip(face_locations, face_names):
+            y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
+
+            cv2.putText(frame, name,(x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 4)
+
+        # cv2.imshow("Frame", frame)
+        passagem = ''.join(face_names)
+        retorno = passagem.split("_")
+        usuario = retorno[0]
+        if passagem == 'Unknown':
+            return False
+        if passagem == '':
+            pass
+        else:
+            return True, usuario
+
+        key = cv2.waitKey(1)
+        if key == 27:
             break
-
-def get_logged_in_user():
-    #coleta usuário logado
-    try:
-        cmd = os.popen("who").read()
-        usuarios = cmd.strip().split("\n")
-        usuario_logado = [usuario.split()[0] for usuario in usuarios]
-        return usuario_logado[0]
-    except Exception as e:
-        pass
 
 def check_uso():
     while True:
         data = datetime.now().strftime('%d-%m-%y')
+        time.sleep(5)
         try:
             pc_em_uso = check_face_existente()
-            if pc_em_uso == True:
-                usuario = get_logged_in_user()
-                mongodb.get_dados(data, usuario, 5)
-                time.sleep(5)
+            if pc_em_uso[0] == True:
+                usuario = pc_em_uso[1]
+                mongodb.get_dados(data, usuario, 7)
         except Exception as err:
             pass
 
