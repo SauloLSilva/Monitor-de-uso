@@ -3,6 +3,7 @@ import cv2
 import os
 import glob
 import numpy as np
+import subprocess
 
 class SimpleFacerec:
     def __init__(self):
@@ -19,7 +20,11 @@ class SimpleFacerec:
         :return:
         """
         # Load Images
-        images_path = glob.glob(os.path.join("/home/saulosilva/Documentos/Faculdade/Monitor-de-uso/app/static/usuarios/", "*.*"))
+
+        rota = str(subprocess.check_output(['pwd']).decode('utf-8'))[:-1]
+        rota = f'{rota}/app/static/img/'
+
+        images_path = glob.glob(os.path.join(rota, "*.*"))
 
         print("{} encoding images found.".format(len(images_path)))
 

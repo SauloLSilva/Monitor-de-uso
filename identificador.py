@@ -54,6 +54,7 @@ def check_uso():
             pc_em_uso = check_face_existente()
             if pc_em_uso[0] == True:
                 usuario = pc_em_uso[1]
+                print(usuario)
                 mongodb.get_dados(data, usuario, 7)
         except Exception as err:
             pass

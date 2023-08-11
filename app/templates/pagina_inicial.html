@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Menu Page</title>
+    <title>Menu</title>
     <link rel="stylesheet" type="text/css" href="/static/css/styles.css">    
     <div class="container">
         <h1>Menu</h1>
         <ul class="menu-list">
+            <li><a href="{{ url_for('registro_facial') }}" class="menu-item">Cadastro Facial</a></li>
             <li><a href="{{ url_for('controle_acesso') }}" class="menu-item">Sessão Atual</a></li>
             <li><a href="{{ url_for('dashboards') }}" class="menu-item">Relatório de Utilização</a></li>
-            <!-- Add more menu options here -->
         </ul>
     </div>
 </body>

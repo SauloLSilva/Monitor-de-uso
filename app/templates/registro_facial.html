@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Face</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">    
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Face</h1>
+        {% if message %}
+        <script>
+            window.alert("{{ message }}");
+        </script>
+        {% endif %}
+        <form method="POST" action="/registro_facial" enctype="multipart/form-data">
+            <label for="name">Nome:</label>
+            <input type="text" name="name" required><br>
+            <input type="file" name="image" accept="image/*" required><br>
+            <br>
+            <input type="submit" value="Criar acesso" class="login-button">
+        </form>
+    </div>
+</body>
+</html>
