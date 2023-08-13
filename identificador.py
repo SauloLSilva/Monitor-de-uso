@@ -55,7 +55,7 @@ def check_uso():
             if pc_em_uso[0] == True:
                 usuario = pc_em_uso[1]
                 print(usuario)
-                mongodb.get_dados(data, usuario, 7)
+                mongodb.get_dados_acesso(data, usuario, 7)
         except Exception as err:
             pass
 
