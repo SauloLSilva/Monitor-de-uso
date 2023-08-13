@@ -51,3 +51,9 @@ class Mongodatabase(object):
         collection = self.server()[data]
         dados = collection.find()
         return dados
+    
+    def get_idade_usuario(self, usuario):
+        collection = self.server()['cadastros']
+        dados = collection.find({'nome':usuario})
+        for usuario in dados:
+            return usuario['idade']

@@ -15,8 +15,11 @@ def check_uso():
     data_atual = datetime.now().strftime('%d-%m-%y')
     usuarios = mongodb.get_registro_de_uso(data_atual)
     for usuario in usuarios:
-        tempo = str(usuario['tempo_de_uso']).split('.')[0]
         nome = usuario['nome']
-        if int(tempo) >= 55 and int(tempo) <= 65:
-            telegram.envio_de_alerta(f'''Usuário {nome} está a {tempo} minutos a frente do PC hoje''')
+        tempo_de_uso = int(str(usuario['tempo_de_uso']).split('.')[0])
+        idade = mongodb.get_idade_usuario(nome)
+        nome = usuario['nome']
+        if tempo_de_uso >= 25 and tempo_de_uso <= 30:
+            telegram.envio_de_alerta(f'''Usuário {nome} está a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}Ano(s)\nData: {data_atual}''')
+
 check_uso()
