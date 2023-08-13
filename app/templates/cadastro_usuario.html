@@ -12,7 +12,7 @@
             window.alert("{{ message }}");
         </script>
         {% endif %}
-        <form method="POST" action="/cadastro_usuario">
+        <form method="POST" action="/cadastro_usuario" onsubmit="return check_password()">
             <label for="username">Usuário (e-mail):</label>
             <input type="text" id="username" name="username" class="input-field" required>
 
@@ -22,5 +22,30 @@
             <input type="submit" value="Criar acesso" class="login-button">
         </form>
     </div>
+    <script>
+        async function sha256(data) {
+        const encoder = new TextEncoder();
+        const dataBuffer = encoder.encode(data);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+        }
+
+        const inputData = prompt('Digite Senha para Prosseguir:');
+        if (inputData !== null) {
+        sha256(inputData).then(hash => {
+            const senha_inserida = hash;
+            const senha = '5adab9f958ffd6a2238785442dcb40f1c10edb48380036fb95033287ab2e6f0e'
+            if(senha_inserida != senha){
+                window.alert('Password Incorreto')
+                window.location.href = "/";
+            }
+        })}
+        else {
+            window.alert('Password Incorreto')
+            window.location.href = "/"
+        }
+    </script>
 </body>
 </html>
