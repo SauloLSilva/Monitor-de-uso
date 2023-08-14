@@ -28,7 +28,7 @@ def check_uso(tipo_alerta):
         idade = mongodb.get_idade_usuario(nome)
         nome = usuario['nome']
         if tipo_alerta == 'hora':
-            if tempo_de_uso >= 25 and tempo_de_uso <= 45:
+            if tempo_de_uso >= 110 and tempo_de_uso <= 130:
                 telegram.envio_de_alerta(f'Usuário {nome} está a {tempo_de_uso} minutos a frente do PC\nIdade: {idade} ano(s)\nData: {data_atual}')
         else:
             mensagem = f'Usuário {nome} esteve a frente do PC {tempo_de_uso} minuto(s)\nIdade: {idade} ano(s)'
