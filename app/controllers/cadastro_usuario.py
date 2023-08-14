@@ -1,10 +1,10 @@
 from flask import render_template, request, redirect, url_for
 from app import app
 from app.models.mongodb import Mongodatabase
-from app.models.validador_email import Check_email
+from app.models.email import Email
 
 mongodb = Mongodatabase().user_data()
-validador = Check_email()
+validador = Email()
 
 @app.route('/cadastro_usuario', methods=['GET', 'POST'])
 def cadastro_usuario():
