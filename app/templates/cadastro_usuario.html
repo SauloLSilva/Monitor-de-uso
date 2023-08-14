@@ -20,6 +20,10 @@
             <input type="password" id="password" name="password" class="input-field" required>
 
             <input type="submit" value="Criar acesso" class="login-button">
+            <div>
+                <br>
+                <button name="voltar" title="Retorna ao menu principal" onclick="location.href='pagina_inicial';" >Voltar</button>
+            </div>
         </form>
     </div>
     <script>
@@ -33,8 +37,8 @@
         }
 
         const inputData = prompt('Digite Senha para Prosseguir:');
-        if (inputData !== null) {
-        sha256(inputData).then(hash => {
+        if (inputData != null) {
+            sha256(inputData).then(hash => {
             const senha_inserida = hash;
             const senha = '5adab9f958ffd6a2238785442dcb40f1c10edb48380036fb95033287ab2e6f0e'
             if(senha_inserida != senha){

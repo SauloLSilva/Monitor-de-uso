@@ -15,16 +15,18 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Replace the example data with the actual data from your MongoDB collection -->
                 {% for item in data %}
                 <tr>
                     <td>{{ item.nome }}</td> 
                     <td>{{ item.tempo_de_uso }}</td>
                 </tr>
                 {% endfor %}
-                <!-- Add more table rows for each record in your data -->
             </tbody>
         </table>
+        <div>
+            <br>
+            <button name="voltar" title="Retorna ao menu principal" onclick="location.href='pagina_inicial';" >Voltar</button>
+        </div>
     </div>
 </body>
 </html>
