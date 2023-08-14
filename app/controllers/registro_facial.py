@@ -7,9 +7,24 @@ from werkzeug.utils import secure_filename
 import subprocess
 from datetime import datetime
 from app.models.mongodb import Mongodatabase
+import signal
 
 validador = SimpleFacerec()
 mongodb = Mongodatabase()
+
+def reiniciar_monitoramento():
+    try:
+        # Encerra o processo atual
+        processo_atual = subprocess.Popen(["pgrep", "-f", "identificador.py"], stdout=subprocess.PIPE)
+        processos_ids = processo_atual.stdout.read().decode().split()
+        for pid in processos_ids:
+            os.kill(int(pid), signal.SIGTERM)
+
+        # Inicia o script novamente
+        subprocess.Popen(["python3", "identificador.py"])
+
+    except:
+        pass
 
 @app.route('/registro_facial', methods=['GET', 'POST'])
 def registro_facial():
@@ -32,6 +47,7 @@ def registro_facial():
                     retorno = validador.load_encoding_images()
                     cadastro = mongodb.cadastro_usuario(nome, idade)
                     mensagem = f'Cadastro de {nome} concluído'
+                    reiniciar_monitoramento()
                     return render_template('registro_facial.html', message=mensagem, image_path=image_path)
 
                 except Exception as err:
