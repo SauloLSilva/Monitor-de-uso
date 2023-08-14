@@ -19,7 +19,7 @@ class Email(object):
             smtp_host = 'smtp.office365.com'
             smtp_port = 587
             smtp_user = 'monitor_uso@outlook.com'
-            smtp_password = 'Teste12345@@'
+            smtp_password = ''
             return (smtp_host, smtp_password, smtp_user, smtp_port)
         except Exception as err:
             print(err)
@@ -28,7 +28,7 @@ class Email(object):
         try:
             # Informações do e-mail
             sender = 'monitor_uso@outlook.com'
-            receiver = 'saulodasilva11@gmail.com'
+            receiver = ''
             subject = 'Relatório de uso'
             body = f'Prezado,\n\nSegue Relatório de uso:\n\n{dado}'
 
