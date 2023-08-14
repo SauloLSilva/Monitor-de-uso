@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>Primeiro Acesso</title>
     <link rel="stylesheet" type="text/css" href="/static/css/styles.css">    
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
+        <h1>Cadastro</h1>
         {% if message %}
         <script>
             window.alert("{{ message }}");
         </script>
         {% endif %}
-        <form method="POST" action="/">
+        <form method="POST" action="/cadastro_usuario">
             <label for="username">Usuário (e-mail):</label>
             <input type="text" id="username" name="username" class="input-field" required>
 
             <label for="password">Senha:</label>
             <input type="password" id="password" name="password" class="input-field" required>
 
-            <input type="submit" value="Login" class="login-button">
+            <input type="submit" value="Criar acesso" class="login-button">
         </form>
-        <p class="create-user-link">Primeiro Acesso? <a href="{{ url_for('cadastro_usuario') }}" class="create-user">Clique Aqui</a></p>
     </div>
 </body>
 </html>
