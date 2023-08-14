@@ -8,6 +8,6 @@ def run_process(process):
 
 # process = ('identificador.py', 'run.py','monitoramento.py')
 # pool = Pool(processes=3)
-process = ('identificador.py', 'run.py')
+process = ('identificador.py', 'run.py', 'monitoramento.py')
 pool = Pool(processes=2)
 pool.map(run_process, process)
