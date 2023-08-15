@@ -46,7 +46,7 @@ def check_uso(tipo_alerta):
                 telegram.envio_de_alerta(f'Usuário {nome} está a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nData: {data_atual}')
 
         else:
-            mensagem = f'Usuário {nome} esteve a frente do PC {tempo_de_uso} minuto(s)\nIdade: {idade} ano(s)'
+            mensagem = f'Usuário {nome} esteve a frente do PC por {tempo_de_uso} minuto(s)\nIdade: {idade} ano(s)'
             telegram.envio_de_alerta(mensagem)
             email.sender(mensagem)
 
