@@ -1,3 +1,4 @@
+#antes de instalar, instalar: sudo apt install zlib1g-dev libjpeg-dev libpng-dev
 APScheduler==3.6.3
 blinker==1.6.2
 cachetools==4.2.2
@@ -25,4 +26,4 @@ six==1.16.0
 tornado==6.1
 tzlocal==5.0.1
 Werkzeug==2.3.6
-zipp==3.16.0
+zipp==3.15.0
