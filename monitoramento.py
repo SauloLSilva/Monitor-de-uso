@@ -12,7 +12,7 @@ email = Email()
 def get_first_digit(number):
     return int(str(number).split('.')[0])
 
-def check_uso(tipo_alerta):
+def monitoramento_hora_dia(tipo_alerta):
     registro = 0
     data_atual = datetime.now().strftime('%d-%m-%y %H:%M')
 
@@ -38,7 +38,7 @@ def check_uso(tipo_alerta):
                     telegram.envio_de_alerta(f'Usuário {nome} está a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nData de Alerta: {data_atual}')
 
             elif idade >=11 and idade <= 18:
-                if tempo_de_uso >= 60:
+                if tempo_de_uso >= 120:
                     mensagem = 'entre 11 e 18 anos:\nManter a exposição às telas entre 2 a 3 horas por dia, com supervisão. Evitar deixar que os adolescentes virem a noite em jogos e outras atividades do tipo.'
                     telegram.envio_de_alerta(f'Usuário {nome} está a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nData de Alerta: {data_atual}')
 
@@ -59,8 +59,8 @@ def check_uso(tipo_alerta):
         telegram.envio_de_alerta(mensagem)
         email.sender(mensagem)
 
-schedule.every(30).minutes.do(check_uso, 'hora')
-schedule.every().day.at('23:55').do(check_uso, 'dia')
+schedule.every(30).minutes.do(monitoramento_hora_dia, 'hora')
+schedule.every().day.at('23:55').do(monitoramento_hora_dia, 'dia')
 
 while True:
     schedule.run_pending()
