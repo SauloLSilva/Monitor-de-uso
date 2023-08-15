@@ -2,6 +2,9 @@ import re
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from app.models.mongodb import Mongodatabase
+
+mongo = Mongodatabase()
 
 class Email(object):
     def validar_email(self, email):
@@ -28,14 +31,14 @@ class Email(object):
         try:
             # Informações do e-mail
             sender = 'monitor_uso@outlook.com'
-            receiver = ''
+            receiver = mongo.get_email_cadastrado()
             subject = 'Relatório de uso'
             body = f'Prezado,\n\nSegue Relatório de uso:\n\n{dado}'
 
             # Criação do objeto MIMEMultipart
             message = MIMEMultipart()
             message['From'] = sender
-            message['To'] = receiver
+            message['To'] = ', '.join(receiver)
             message['Subject'] = subject
 
             # Adiciona o corpo do e-mail

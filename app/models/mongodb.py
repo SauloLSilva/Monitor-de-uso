@@ -57,3 +57,13 @@ class Mongodatabase(object):
         dados = collection.find({'nome':usuario})
         for usuario in dados:
             return usuario['idade']
+        
+    def get_email_cadastrado(self):
+        collection = self.server()['users']
+        dados = collection.find()
+        lista = list()
+        for usuario in dados:
+            email =  usuario['username']
+            if email not in lista:
+                lista.append(email)
+        return lista
