@@ -38,7 +38,7 @@ class Email(object):
             # Criação do objeto MIMEMultipart
             message = MIMEMultipart()
             message['From'] = sender
-            message['To'] = ', '.join(receiver)
+            message['To'] = ','.join(receiver)
             message['Subject'] = subject
 
             # Adiciona o corpo do e-mail
