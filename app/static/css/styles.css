@@ -178,8 +178,8 @@ h1 {
 }
 
 .image {
-    width: 300px;
-    height: 200px;
+    width: 600px;
+    /* height: 400px; */
     object-fit: cover;
     margin: 10px;
     border-radius: 5px;
