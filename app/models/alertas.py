@@ -6,6 +6,7 @@ from app.models.email import Email
 mongodb = Mongodatabase()
 telegram = Bot_alerta()
 email = Email()
+mensagens = list()
 
 class alertas(object):
     def monitoramento_hora_dia(self, tipo_alerta):
@@ -42,9 +43,13 @@ class alertas(object):
                     telegram.envio_de_alerta(f'Usuário {nome} está a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nData: {data_atual}')
 
             else:
-                mensagem = f'Usuário {nome} esteve a frente do PC por {tempo_de_uso} minuto(s)\nIdade: {idade} ano(s)'
-                telegram.envio_de_alerta(mensagem)
-                email.sender(mensagem)
+                mensagem = f'\nUsuário {nome} esteve a frente do PC por {tempo_de_uso} minuto(s)\nIdade: {idade} ano(s)'
+                mensagens.append(mensagem)
+
+        if mensagens.count != 0:
+            mensagem_telegram = ', '.join(mensagens)
+            telegram.envio_de_alerta(mensagem_telegram)
+            email.sender(mensagem_telegram)
 
         if registro == 0 and tipo_alerta == 'hora':
             mensagem = f'Sem Utilização do PC no momento\nData: {data_atual}'

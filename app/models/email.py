@@ -2,7 +2,9 @@ import re
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 from app.models.mongodb import Mongodatabase
+import subprocess
 
 mongo = Mongodatabase()
 
@@ -43,6 +45,12 @@ class Email(object):
 
             # Adiciona o corpo do e-mail
             message.attach(MIMEText(body, 'plain'))
+
+            rota = str(subprocess.check_output(['pwd']).decode('utf-8'))[:-1]
+            rota = f'{rota}/app/static/graphs/relatorio_diario.png'
+            with open(rota, 'rb') as image_file:
+                img = MIMEImage(image_file.read(), name='relatorio_diario.png')
+            message.attach(img)
 
             # Conexão com o servidor SMTP
             server = smtplib.SMTP(self.connect()[0], self.connect()[3])
