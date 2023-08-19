@@ -54,3 +54,6 @@ class alertas(object):
             mensagem = ('Dia {} não teve utilização do PC'.format(data_atual.split(' ')[0]))
             telegram.envio_de_alerta(mensagem)
             email.sender(mensagem)
+
+        if registro != 0 and tipo_alerta == 'dia':
+            telegram.envio_imagem()
