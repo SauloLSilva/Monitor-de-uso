@@ -74,5 +74,6 @@ class Gerar_grafico(object):
 
             
             plt.savefig ('app/static/graphs/relatorio_diario.png')
+            plt.close()
         except Exception as err:
             print(err)

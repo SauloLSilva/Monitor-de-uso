@@ -26,13 +26,14 @@ def controle_acesso():
         usuarios_data = []
         for usuario in usuarios:
             idade = mongodb.get_idade_usuario(usuario['nome'])
-            usuarios_data.append({
-                'nome': usuario['nome'],
-                'tempo_de_uso': str(usuario['tempo_de_uso']).split('.')[0],
-                'idade': idade
-            })
+            if int(idade) > 18:
+                usuarios_data.append({
+                    'nome': usuario['nome'],
+                    'tempo_de_uso': str(usuario['tempo_de_uso']).split('.')[0],
+                    'idade': idade
+                })
     except Exception as err:
-        usuarios_data = [{"nome": ''}, {"tempo_de_uso": ''}]
+        usuarios_data = ''
     
     dados.grafico_diario()
     
