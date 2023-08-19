@@ -15,8 +15,6 @@ class alertas(object):
 
         usuarios = mongodb.get_registro_de_uso(data_atual.split(' ')[0])
 
-        if tipo_alerta == 'dia':
-            telegram.envio_de_alerta('Seu Relatorio diário do dia {}:'.format(data_atual.split(' ')[0]))
         for usuario in usuarios:
             registro += 1
             nome = usuario['nome']
@@ -48,7 +46,7 @@ class alertas(object):
 
         if mensagens.count != 0:
             mensagem_telegram = ', '.join(mensagens)
-            telegram.envio_de_alerta(mensagem_telegram)
+            telegram.envio_de_alerta('Seu Relatorio diário do dia {}:\n{}'.format(data_atual.split('.')[0], mensagem_telegram))
             email.sender(mensagem_telegram)
 
         if registro == 0 and tipo_alerta == 'hora':

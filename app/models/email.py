@@ -35,7 +35,7 @@ class Email(object):
             sender = 'monitor_uso@outlook.com'
             receiver = mongo.get_email_cadastrado()
             subject = 'Relatório de uso'
-            body = f'Prezado,\n\nSegue Relatório de uso:\n\n{dado}'
+            body = f'Prezado,\n\nSegue Relatório de uso:\n{dado}'
 
             # Criação do objeto MIMEMultipart
             message = MIMEMultipart()
