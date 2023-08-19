@@ -5,6 +5,7 @@ import os
 app = Flask(__name__, static_url_path='/static')
 try:
     os.mkdir('app/static/img')
+    os.mkdir('app/static/graphs')
 except:
     pass
 app.config['UPLOAD_FOLDER'] = 'app/static/img'
