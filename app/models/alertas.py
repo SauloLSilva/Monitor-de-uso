@@ -59,4 +59,4 @@ class alertas(object):
             email.sender(mensagem)
 
         if registro != 0 and tipo_alerta == 'dia':
-            telegram.envio_imagem()
+            telegram.envio_imagem('relatorio_diario')
