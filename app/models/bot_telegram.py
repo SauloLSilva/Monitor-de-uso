@@ -16,9 +16,9 @@ class Bot_alerta(object):
         
         return True
     
-    def envio_imagem(self):
+    def envio_imagem(self, nome_arquivo):
         rota = str(subprocess.check_output(['pwd']).decode('utf-8'))[:-1]
-        rota = f'{rota}/app/static/graphs/relatorio_diario.png'
+        rota = f'{rota}/app/static/graphs/{nome_arquivo}.png'
 
         # Crie um objeto bot com o seu token de acesso
         bot = telegram.Bot(self.token_api()[0])
