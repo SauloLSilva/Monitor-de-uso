@@ -24,7 +24,6 @@ class alertas(object):
             idade = int(mongodb.get_idade_usuario(nome))
             nome = usuario['nome']
             if tipo_alerta == 'hora':
-                telegram.envio_de_alerta('Seu Relatório solicitado')
                 if idade >=2 and idade < 6:
                     if tempo_de_uso >= 60:
                         mensagem = 'entre 2 e 5 anos:\nLimitar a uma hora por dia, sempre com supervisão de um adulto;'
