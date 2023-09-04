@@ -24,6 +24,7 @@ class alertas(object):
             idade = int(mongodb.get_idade_usuario(nome))
             nome = usuario['nome']
             if tipo_alerta == 'hora':
+                telegram.envio_de_alerta('Seu Relatório solicitado')
                 if idade >=2 and idade < 6:
                     if tempo_de_uso >= 60:
                         mensagem = 'entre 2 e 5 anos:\nLimitar a uma hora por dia, sempre com supervisão de um adulto;'
@@ -42,14 +43,9 @@ class alertas(object):
                 elif idade > 18:
                     telegram.envio_de_alerta(f'Usuário {nome} está a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nData: {data_atual}')
 
-            else:
-                mensagem = f'\nUsuário {nome} esteve a frente do PC por {tempo_de_uso} minuto(s)\nIdade: {idade} ano(s)'
-                mensagens.append(mensagem)
-
-        if mensagens.count != 0 and tipo_alerta == 'dia':
-            mensagem_telegram = ', '.join(mensagens)
-            telegram.envio_de_alerta('Seu Relatorio diário do dia {}:\n{}'.format(data_atual.split('.')[0], mensagem_telegram))
-            email.sender(mensagem_telegram)
+                else:
+                    mensagem = f'\nUsuário {nome} esteve a frente do PC por {tempo_de_uso} minuto(s)\nIdade: {idade} ano(s)'
+                    telegram.envio_de_alerta(mensagem)
 
         if registro == 0 and tipo_alerta == 'hora':
             mensagem = f'Sem Utilização do PC no momento\nData: {data_atual}'
@@ -58,9 +54,10 @@ class alertas(object):
         if registro == 0 and tipo_alerta == 'dia':
             mensagem = ('Dia {} não teve utilização do PC'.format(data_atual.split(' ')[0]))
             telegram.envio_de_alerta(mensagem)
-            email.sender(mensagem)
 
         if registro != 0 and tipo_alerta == 'dia':
+            mensagem = ('Seu Relatório Diário\nData:{}'.format(data_atual.split(' ')[0]))
+            telegram.envio_de_alerta(mensagem)
             telegram.envio_imagem('relatorio_diario')
 
     def monitoramento_semanal(self, nome, idade):
@@ -74,31 +71,34 @@ class alertas(object):
 
             for dia in get_dados_mongo:
                 data = Mongodatabase().get_registro_de_uso_semanal(dia, nome)
-                for dados in data:
-                    registro +=1
-                    tempo_de_uso = (str(dados['tempo_de_uso']).split('.')[0])
-                    if idade >=2 and idade < 6:
-                        if tempo_de_uso >= 60:
-                            mensagem = 'entre 2 e 5 anos:\nLimitar a uma hora por dia, sempre com supervisão de um adulto;'
-                            telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nDia: {dia}')
-                        else:
-                            telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nDia: {dia}')
+                try:
+                    for dados in data:
+                        registro +=1
+                        tempo_de_uso = (str(dados['tempo_de_uso']).split('.')[0])
+                        if idade >=2 and idade < 6:
+                            if tempo_de_uso >= 60:
+                                mensagem = 'entre 2 e 5 anos:\nLimitar a uma hora por dia, sempre com supervisão de um adulto;'
+                                telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nDia: {dia}')
+                            else:
+                                telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nDia: {dia}')
 
-                    elif idade >=6 and idade <= 11:
-                        if tempo_de_uso >= 120:
-                            mensagem = 'entre 6 e 10 anos:\nLimitar o tempo de tela a uma ou duas horas por dia, sempre com supervisão;'
-                            telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nDia: {dia}')
-                        else:
-                            telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nDia: {dia}')
+                        elif idade >=6 and idade <= 11:
+                            if tempo_de_uso >= 120:
+                                mensagem = 'entre 6 e 10 anos:\nLimitar o tempo de tela a uma ou duas horas por dia, sempre com supervisão;'
+                                telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nDia: {dia}')
+                            else:
+                                telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nDia: {dia}')
 
-                    elif idade >=11 and idade <= 18:
-                        if tempo_de_uso >= 180:
-                            mensagem = 'entre 11 e 18 anos:\nManter a exposição às telas entre 2 a 3 horas por dia, com supervisão. Evitar deixar que os adolescentes virem a noite em jogos e outras atividades do tipo.'
-                            telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nDia: {dia}')
+                        elif idade >=11 and idade <= 18:
+                            if tempo_de_uso >= 180:
+                                mensagem = 'entre 11 e 18 anos:\nManter a exposição às telas entre 2 a 3 horas por dia, com supervisão. Evitar deixar que os adolescentes virem a noite em jogos e outras atividades do tipo.'
+                                telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nSegundo Sociedade Brasileira de Pediatria (SBP), {mensagem}\nIdade: {idade} ano(s)\nDia: {dia}')
+                            else:
+                                telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nDia: {dia}')
                         else:
                             telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nDia: {dia}')
-                    else:
-                        telegram.envio_de_alerta(f'Usuário {nome} esteve a {tempo_de_uso} minutos a frente do PC\nIdade: {idade}\nDia: {dia}')
+                except:
+                    pass
 
             if registro == 0:
                 telegram.envio_de_alerta(f'Usuário {nome} Não Utilizou o PC durante o período de {dias_da_semana[0]} e {dias_da_semana[-1]}')
