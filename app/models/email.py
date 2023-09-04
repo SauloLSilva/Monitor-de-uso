@@ -2,7 +2,9 @@ import re
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 from app.models.mongodb import Mongodatabase
+import subprocess
 
 mongo = Mongodatabase()
 
@@ -15,44 +17,4 @@ class Email(object):
             return True
         else:
             return False
-        
-    def connect(self):
-        try:
-            # Configurações do servidor SMTP
-            smtp_host = 'smtp.office365.com'
-            smtp_port = 587
-            smtp_user = 'monitor_uso@outlook.com'
-            smtp_password = ''
-            return (smtp_host, smtp_password, smtp_user, smtp_port)
-        except Exception as err:
-            print(err)
 
-    def sender(self, dado):
-        try:
-            # Informações do e-mail
-            sender = 'monitor_uso@outlook.com'
-            receiver = mongo.get_email_cadastrado()
-            subject = 'Relatório de uso'
-            body = f'Prezado,\n\nSegue Relatório de uso:\n\n{dado}'
-
-            # Criação do objeto MIMEMultipart
-            message = MIMEMultipart()
-            message['From'] = sender
-            message['To'] = ','.join(receiver)
-            message['Subject'] = subject
-
-            # Adiciona o corpo do e-mail
-            message.attach(MIMEText(body, 'plain'))
-
-            # Conexão com o servidor SMTP
-            server = smtplib.SMTP(self.connect()[0], self.connect()[3])
-            server.starttls()
-            server.login(self.connect()[2], self.connect()[1])
-
-            # Envio do e-mail
-            server.sendmail(sender, receiver, message.as_string())
-
-            # Encerra a conexão com o servidor SMTP
-            server.quit()
-        except Exception as err:
-            print(err)

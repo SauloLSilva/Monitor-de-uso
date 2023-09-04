@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from bson import ObjectId
 
 class Mongodatabase(object):
     def server(self):
@@ -67,3 +68,34 @@ class Mongodatabase(object):
             if email not in lista:
                 lista.append(email)
         return lista
+    
+    def get_registro_de_uso_semanal(self, data, usuario):
+        collection = self.server()[data]
+        query = {'nome': usuario}
+        registro_usuario = collection.count_documents(query)
+        if registro_usuario:
+            dados = collection.find()
+            for dado in dados:
+                return dado['tempo_de_uso']
+        else:
+            return 0
+        
+    def get_cadastros(self):
+        collection = self.server()['cadastros']
+        cadastrados = collection.find()
+        return cadastrados
+    
+    def get_id_colaborador(self, id):
+        collection = self.server()['cadastros']
+        try:
+            # Convert the user ID string to an ObjectId
+            usuario_id = ObjectId(id)
+
+            # Query for the user by ID
+            usuario = collection.find_one({"_id": usuario_id})
+
+            if usuario:
+                return usuario['nome'], usuario['idade']
+
+        except Exception as e:
+            print("Error:", str(e))

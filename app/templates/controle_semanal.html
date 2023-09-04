@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Display</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">    
+</head>
+<body>
+    <div class="container">
+        <table>
+            <h1>Relatório Semanal</h1>
+            <h4>Clique em envio de relatório para receber dados</h4>
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Idade</th>
+                    <th>Ação</th> <!-- Adicione uma coluna para os botões -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuarios in data %}
+                <tr>
+                    <td style="display: none;">{{ usuarios.id }}</td> 
+                    <td>{{ usuarios.nome }}</td> 
+                    <td>{{ usuarios.idade }}</td>
+                    <td>
+                        <form method="post" action="/controle_semanal">
+                            <input type="hidden" name="usuario_id" value="{{ usuarios.id}}"> <!-- Pode adicionar um campo hidden com o ID do usuário ou outra informação necessária -->
+                            <button class="button-7" role="button">Envio de Relatório</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <button class="button-voltar" name="voltar" title="Retorna ao menu principal" onclick="location.href='pagina_inicial';">Voltar</button>
+        </div>
+    </div>
+</body>
+</html>

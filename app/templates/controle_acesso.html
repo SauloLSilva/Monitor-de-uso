@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Display</title>
+    <title>Image Display</title>
     <link rel="stylesheet" type="text/css" href="/static/css/styles.css">    
 </head>
 <body>
-    <div class="container" id>
-        <h1>Tempo de Utilização(Hoje)</h1>
+    <div class="container">
+        <h1>Relatório Diário</h1>
+        <div class="image-container">
+            <img src="static/graphs/relatorio_diario.png" alt="Image 1" class="image">
+        </div>
         <table>
             <thead>
+                <h4>Outros Usuários (+18)</h4>
                 <tr>
                     <th>Usuario</th>
+                    <th>Idade</th>
                     <th>Tempo(Minutos)</th>
                 </tr>
             </thead>
             <tbody>
-                {% for item in data %}
+                {% for usuarios in data %}
                 <tr>
-                    <td>{{ item.nome }}</td> 
-                    <td>{{ item.tempo_de_uso }}</td>
+                    <td>{{ usuarios.nome }}</td> 
+                    <td>{{ usuarios.idade }}</td>
+                    <td>{{ usuarios.tempo_de_uso }}</td>
+
                 </tr>
                 {% endfor %}
             </tbody>

@@ -4,7 +4,9 @@ from flask import render_template, request, redirect, url_for
 from app.models.mongodb import Mongodatabase
 from datetime import datetime
 from app.models.alertas import alertas
+from app.models.dashboards import Gerar_grafico
 
+dados = Gerar_grafico()
 mongodb = Mongodatabase()
 alerta = alertas()
 
@@ -16,12 +18,23 @@ def controle_acesso():
     if request.method == 'POST':
         alerta.monitoramento_hora_dia('dia')
         return redirect(url_for('pagina_inicial'))
+    
     try:
         data_atual = datetime.now().strftime('%d-%m-%y')
-        usuarios = [mongodb.get_registro_de_uso(data_atual)]
+        usuarios = mongodb.get_registro_de_uso(data_atual)
+        
+        usuarios_data = []
         for usuario in usuarios:
-            data = [{"nome": item["nome"], "tempo_de_uso": get_first_digit(item["tempo_de_uso"])} for item in usuario]
+            idade = mongodb.get_idade_usuario(usuario['nome'])
+            if int(idade) > 18:
+                usuarios_data.append({
+                    'nome': usuario['nome'],
+                    'tempo_de_uso': str(usuario['tempo_de_uso']).split('.')[0],
+                    'idade': idade
+                })
     except Exception as err:
-        data = [{"nome":''}, {"tempo_de_uso": ''}]
-
-    return render_template('controle_acesso.html', data=data)
+        usuarios_data = ''
+    
+    dados.grafico_diario()
+    
+    return render_template('controle_acesso.html', data=usuarios_data)
