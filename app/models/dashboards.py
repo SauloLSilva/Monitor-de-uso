@@ -86,6 +86,7 @@ class Gerar_grafico(object):
 
     def grafico_individual(self, nome, idade):
 
+        idade = int(idade)
         try:
             subprocess.check_output(['rm', 'app/static/graphs/monitoramento_individual.png'])
         except:
@@ -106,34 +107,35 @@ class Gerar_grafico(object):
         acesso_semanal = list()
         cores = list()
 
-        for dia in get_dados_mongo:
-            data = Mongodatabase().get_registro_de_uso_semanal(dia, nome)
-            try:
-                for dados in data:
-                    tempo_de_uso = (str(dados['tempo_de_uso']).split('.')[0])
-                    acesso_semanal.append(tempo_de_uso)
-                    if idade >=2 and idade < 6:
-                        if tempo_de_uso >= 60 and tempo_de_uso <= 75:
-                            cores.append(amarelo)
-                        elif tempo_de_uso > 75:
-                            cores.append(vermelho)
-                        else:
-                            cores.append(verde)
 
-                    elif idade >=6 and idade <= 11:
-                        if tempo_de_uso >= 120 and tempo_de_uso >= 135:
-                            cores.append(amarelo)
-                        elif tempo_de_uso > 135:
-                            cores.append(vermelho)
-                        else:
-                            cores.append(verde)
-                    elif idade >=11 and idade <= 18:
-                        if tempo_de_uso >= 180 and tempo_de_uso >= 195:
-                            cores.append(amarelo)
-                        elif tempo_de_uso > 195:
-                            cores.append(vermelho)
-                        else:
-                            cores.append(verde)
+        for dia in dias_da_semana:
+            try:
+                tempo_de_uso = Mongodatabase().get_registro_de_uso_semanal(dia, nome)
+                if '.' in str(tempo_de_uso):
+                    tempo_de_uso = int(str(tempo_de_uso).split('.')[0])
+                acesso_semanal.append(tempo_de_uso)
+                if idade >=2 and idade < 6:
+                    if tempo_de_uso >= 60 and tempo_de_uso <= 75:
+                        cores.append(amarelo)
+                    elif tempo_de_uso > 75:
+                        cores.append(vermelho)
+                    else:
+                        cores.append(verde)
+
+                elif idade >=6 and idade <= 11:
+                    if tempo_de_uso >= 120 and tempo_de_uso >= 135:
+                        cores.append(amarelo)
+                    elif tempo_de_uso > 135:
+                        cores.append(vermelho)
+                    else:
+                        cores.append(verde)
+                elif idade >=11 and idade <= 18:
+                    if tempo_de_uso >= 180 and tempo_de_uso >= 195:
+                        cores.append(amarelo)
+                    elif tempo_de_uso > 195:
+                        cores.append(vermelho)
+                    else:
+                        cores.append(verde)
             except:
                 cores.append(verde)
                 acesso_semanal.append(0)
@@ -145,7 +147,7 @@ class Gerar_grafico(object):
 
             plt.ylabel("Data")
             plt.xlabel("Tempo(Minutos)")
-            plt.title(f"Tempo de uso do Usuário {nome}\n{dias_da_semana[0]} - {dias_da_semana[-1]}")
+            plt.title(f"Tempo de uso do Usuário {nome} ({idade} Ano(s))\n{dias_da_semana[0]} - {dias_da_semana[-1]}")
 
             color_patches = [mpatches.Patch(color=color, label=label) for color, label in zip(paleta_de_cores, declaracao_cores)]
 

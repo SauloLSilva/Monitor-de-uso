@@ -75,7 +75,8 @@ class Mongodatabase(object):
         registro_usuario = collection.count_documents(query)
         if registro_usuario:
             dados = collection.find()
-            return dados
+            for dado in dados:
+                return dado['tempo_de_uso']
         else:
             return 0
         
