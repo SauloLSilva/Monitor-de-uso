@@ -4,11 +4,13 @@ from flask import render_template, request, redirect, url_for
 from app.models.mongodb import Mongodatabase
 from app.models.dashboards import Gerar_grafico
 from app.models.bot_telegram import Bot_alerta
+from app.models.alertas import alertas
 
 
 mongodb = Mongodatabase()
 telegram = Bot_alerta()
 grafico = Gerar_grafico()
+alerta = alertas()
 
 @app.route('/controle_semanal', methods=['GET', 'POST'])
 def controle_semanal():
@@ -17,7 +19,9 @@ def controle_semanal():
         data = request.form
         id = data.get('usuario_id')
         dados = mongodb.get_id_colaborador(id)
-        grafico.grafico_individual(dados[0], dados[1])
+        nome = dados[0]
+        idade = dados[1]
+        alerta.monitoramento_semanal(nome, idade)
 
     try:
         usuarios = mongodb.get_cadastros()
