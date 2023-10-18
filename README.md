@@ -4,6 +4,8 @@ Projeto utilizando Python3, Flask, Mongodb para alertas e gestão de horas utili
 
 Projeto utiliza biblioteca SimpleFaceRec, projeto disponivel em: https://pysource.com/2021/08/16/face-recognition-in-real-time-with-opencv-and-python/
 
+#Projeto testado e validado usando Python 3.8.10
+
 Para executar projeto:
 instale as bibliotecas em requirements (pip install -r requirements.txt)
 
