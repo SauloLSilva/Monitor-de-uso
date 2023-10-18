@@ -10,7 +10,7 @@ except:
     pass
 app.config['UPLOAD_FOLDER'] = 'app/static/img'
 
-from app.controllers import index, controle_semanal, pagina_inicial, controle_acesso, cadastro_usuario, registro_facial
+from app.controllers import index, controle_semanal, pagina_inicial, controle_diario, cadastro_usuario, registro_facial
 
 
 # '''instância, recebe variavel name, que recebe um valor 

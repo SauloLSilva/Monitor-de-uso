@@ -13,7 +13,7 @@ alerta = alertas()
 def get_first_digit(number):
     return int(str(number).split('.')[0])
 
-@app.route('/controle_acesso', methods=['GET', 'POST'])
+@app.route('/controle_diario', methods=['GET', 'POST'])
 def controle_acesso():
     if request.method == 'POST':
         alerta.monitoramento_hora_dia('dia')
@@ -37,4 +37,4 @@ def controle_acesso():
     
     dados.grafico_diario()
     
-    return render_template('controle_acesso.html', data=usuarios_data)
+    return render_template('controle_diario.html', data=usuarios_data)
