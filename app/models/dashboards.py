@@ -137,6 +137,8 @@ class Gerar_grafico(object):
                         cores.append(vermelho)
                     else:
                         cores.append(verde)
+                else:
+                    cores.append(azul)
             except:
                 cores.append(verde)
                 acesso_semanal.append(0)
