@@ -123,14 +123,15 @@ class Gerar_grafico(object):
                         cores.append(verde)
 
                 elif idade >=6 and idade <= 11:
-                    if tempo_de_uso >= 120 and tempo_de_uso >= 135:
+                    if tempo_de_uso >= 120 and tempo_de_uso <= 135:
                         cores.append(amarelo)
                     elif tempo_de_uso > 135:
                         cores.append(vermelho)
                     else:
                         cores.append(verde)
+
                 elif idade >=11 and idade <= 18:
-                    if tempo_de_uso >= 180 and tempo_de_uso >= 195:
+                    if tempo_de_uso >= 180 and tempo_de_uso <= 195:
                         cores.append(amarelo)
                     elif tempo_de_uso > 195:
                         cores.append(vermelho)
